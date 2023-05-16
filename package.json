@@ -1,10 +1,11 @@
 {
   "name": "koa-controller-register",
-  "version": "1.0.0",
+  "version": "0.1.0",
   "description": "Autoload koa routes by using decorators.",
   "files": [
     "dist/**/*"
   ],
+  "main": "dist/index.js",
   "scripts": {
     "build": "tsc",
     "format": "prettier --write \\\"src/**/*.ts\\\" \\\"example/**/*.ts\\\"",
