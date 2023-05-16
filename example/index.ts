@@ -1,4 +1,4 @@
-import * as Application from 'koa'
+import Application from 'koa'
 import PingController from './ping.controller'
 import { registerControllers } from '../src'
 

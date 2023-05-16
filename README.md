@@ -2,6 +2,10 @@
 
 Autoload koa routes by using decorators.
 
+```shell
+$ npm install koa-controller-register
+```
+
 ## decorators
 
 ### class decorators:
@@ -23,7 +27,7 @@ Autoload koa routes by using decorators.
 
 - example/index.ts :
 ```typescript
-import * as Application from 'koa'
+import Application from 'koa'
 import { registerControllers } from 'koa-controller-register'
 import PingController from './ping.controller'
 
