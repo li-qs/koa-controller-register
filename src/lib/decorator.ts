@@ -15,13 +15,13 @@ export function Controller(prefix?: string) {
     }
 }
 
-export function Middlewares(middlewares: Middleware[]) {
+export function Middlewares(...middlewares: Middleware[]) {
     return function (target: any) {
         Reflect.defineMetadata(METADATA_MIDDLEWARES, middlewares, target)
     }
 }
 
-export function Before(middlewares: Middleware[]) {
+export function Before(...middlewares: Middleware[]) {
     return function (
         target: any,
         propertyKey: string | symbol,
