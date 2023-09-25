@@ -41,8 +41,6 @@ export const Post = createMethodDecorator(REQUEST_METHODS.POST)
 export const Delete = createMethodDecorator(REQUEST_METHODS.DELETE)
 export const Put = createMethodDecorator(REQUEST_METHODS.PUT)
 export const Patch = createMethodDecorator(REQUEST_METHODS.PATCH)
-export const Options = createMethodDecorator(REQUEST_METHODS.OPTIONS)
-export const Head = createMethodDecorator(REQUEST_METHODS.HEAD)
 export const All = createMethodDecorator(REQUEST_METHODS.ALL)
 
 function methodDecorator(method: string, path: string) {

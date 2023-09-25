@@ -5,8 +5,6 @@ export const REQUEST_METHODS = {
     DELETE: 'delete',
     PATCH: 'patch',
     ALL: 'all',
-    OPTIONS: 'options',
-    HEAD: 'head',
 }
 export const METADATA_PREFIX = 'prefix'
 export const METADATA_PATH = 'path'
