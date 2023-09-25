@@ -1,6 +1,6 @@
 # koa-controller-register
 
-Autoload koa routes by using decorators.
+An ES6 decorator based router, support auto load controllers.
 
 ```shell
 $ npm install koa-controller-register
