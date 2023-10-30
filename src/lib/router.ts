@@ -13,14 +13,16 @@ function generateRouter(cls: new () => void) {
     const prefix: string = Reflect.getMetadata(METADATA_PREFIX, cls)
     const middlewares: Middleware[] =
         Reflect.getMetadata(METADATA_MIDDLEWARES, cls) || []
-    const dynamicFuncNames: Array<string | symbol> = Reflect.ownKeys(
+    const funcNames: Array<string | symbol> = Reflect.ownKeys(
         cls.prototype
     )
     const controller = new cls()
+
     const router = new Router()
     router.prefix(prefix)
     router.use(...middlewares)
-    dynamicFuncNames.forEach((funcName) => {
+
+    funcNames.forEach((funcName) => {
         if (
             funcName === FUNCTION_CONSTRUCTOR ||
             !controller[funcName] ||
@@ -47,17 +49,26 @@ function generateRouter(cls: new () => void) {
             []
         router[requestMethod](requestPath, ...middlewares, controller[funcName])
     })
+
     return router
 }
 
-function register(app: Application, controller: new () => void) {
+function use(app: Application, controller: new () => void) {
     const router = generateRouter(controller)
     app.use(router.routes()).use(router.allowedMethods())
 }
 
 export function registerControllers(
     app: Application,
-    controllers: Array<new () => void>
+    ...controllers: Array<new () => void>
 ) {
-    controllers.forEach((controller) => register(app, controller))
+    controllers.forEach((controller) => use(app, controller))
 }
+
+export function useControllers(
+    app: Application,
+    ...controllers: Array<new () => void>
+) {
+    controllers.forEach((controller) => use(app, controller))
+}
+

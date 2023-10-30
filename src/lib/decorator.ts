@@ -8,10 +8,11 @@ import {
 } from './constants'
 import { Middleware } from 'koa'
 
-export function Controller(prefix?: string) {
+export function Controller(prefix?: string, middlewares?: Middleware[]) {
     prefix = prefix && prefix.length ? prefix : '/'
     return function (target: any) {
         Reflect.defineMetadata(METADATA_PREFIX, prefix, target)
+        if (middlewares) Reflect.defineMetadata(METADATA_MIDDLEWARES, middlewares, target)
     }
 }
 
@@ -43,7 +44,7 @@ export const Put = createMethodDecorator(REQUEST_METHODS.PUT)
 export const Patch = createMethodDecorator(REQUEST_METHODS.PATCH)
 export const All = createMethodDecorator(REQUEST_METHODS.ALL)
 
-function methodDecorator(method: string, path: string) {
+function methodDecorator(method: string, path: string, middlewares?: Middleware[]) {
     return function (
         target: any,
         propertyKey: string | symbol,
@@ -51,13 +52,14 @@ function methodDecorator(method: string, path: string) {
     ) {
         Reflect.defineMetadata(METADATA_METHOD, method, descriptor.value)
         Reflect.defineMetadata(METADATA_PATH, path, descriptor.value)
+        if (middlewares) Reflect.defineMetadata(METADATA_MIDDLEWARES, middlewares, descriptor.value)
         return descriptor
     }
 }
 
 function createMethodDecorator(method: string) {
-    return function (path?: string): MethodDecorator {
+    return function (path?: string, middlewares?: Middleware[]): MethodDecorator {
         path = path && path.length ? path : '/'
-        return methodDecorator(method, path)
+        return methodDecorator(method, path, middlewares)
     }
 }
