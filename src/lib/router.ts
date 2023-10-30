@@ -60,7 +60,7 @@ function use(app: Application, controller: new () => void) {
 
 export function registerControllers(
     app: Application,
-    ...controllers: Array<new () => void>
+    controllers: Array<new () => void>
 ) {
     controllers.forEach((controller) => use(app, controller))
 }
