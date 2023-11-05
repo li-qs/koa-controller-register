@@ -50,9 +50,12 @@ function methodDecorator(method: string, path: string, middlewares?: Middleware[
         propertyKey: string | symbol,
         descriptor: TypedPropertyDescriptor<any>
     ) {
+        middlewares = middlewares || []
+
         Reflect.defineMetadata(METADATA_METHOD, method, descriptor.value)
         Reflect.defineMetadata(METADATA_PATH, path, descriptor.value)
-        if (middlewares) Reflect.defineMetadata(METADATA_MIDDLEWARES, middlewares, descriptor.value)
+        Reflect.defineMetadata(METADATA_MIDDLEWARES, middlewares, descriptor.value)
+
         return descriptor
     }
 }

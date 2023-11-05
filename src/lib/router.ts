@@ -24,30 +24,18 @@ function generateRouter(cls: new () => void) {
 
     funcNames.forEach((funcName) => {
         if (
-            funcName === FUNCTION_CONSTRUCTOR ||
-            !controller[funcName] ||
-            'function' !== typeof controller[funcName]
-        ) {
-            return
-        }
-        const requestMethod = Reflect.getMetadata(
-            METADATA_METHOD,
-            controller[funcName]
-        )
-        if (
-            !router[requestMethod] ||
-            'function' !== typeof router[requestMethod]
-        ) {
-            return
-        }
-        const requestPath = Reflect.getMetadata(
-            METADATA_PATH,
-            controller[funcName]
-        )
-        const middlewares =
-            Reflect.getMetadata(METADATA_MIDDLEWARES, controller[funcName]) ||
-            []
-        router[requestMethod](requestPath, ...middlewares, controller[funcName])
+            funcName === FUNCTION_CONSTRUCTOR || !controller[funcName] || 'function' !== typeof controller[funcName]
+        ) return
+
+        const func = controller[funcName]
+
+        const method = Reflect.getMetadata(METADATA_METHOD, func)
+        const path = Reflect.getMetadata(METADATA_PATH, func)
+        const middlewares = Reflect.getMetadata(METADATA_MIDDLEWARES, func) || []
+
+        if (!router[method] || 'function' !== typeof router[method] || !path) return
+
+        router[method](path, ...middlewares, func)
     })
 
     return router
