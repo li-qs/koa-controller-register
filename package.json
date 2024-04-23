@@ -1,6 +1,6 @@
 {
   "name": "koa-controller-register",
-  "version": "0.2.4",
+  "version": "0.2.5",
   "description": "Autoload koa routes by using decorators.",
   "author": "Li Qiushi",
   "repository": "git@github.com:li-qs/koa-controller-register.git",
