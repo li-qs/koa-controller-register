@@ -46,6 +46,11 @@ function use(app: Application, controller: new () => void) {
     app.use(router.routes()).use(router.allowedMethods())
 }
 
+/**
+ * @depreciated please use useControllers()
+ * @param app
+ * @param controllers
+ */
 export function registerControllers(
     app: Application,
     controllers: Array<new () => void>

@@ -1,9 +1,9 @@
 import Application from 'koa'
 import PingController from './ping.controller'
-import { registerControllers } from '../src'
+import {useControllers} from '../src'
 
-const controllers = [PingController]
 const app = new Application()
-// ...
-registerControllers(app, controllers)
+
+useControllers(app, PingController)
+
 app.listen(8080)
