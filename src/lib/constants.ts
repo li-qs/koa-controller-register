@@ -1,11 +1,9 @@
-export const REQUEST_METHODS = {
-    GET: 'get',
-    POST: 'post',
-    PUT: 'put',
-    DELETE: 'delete',
-    PATCH: 'patch',
-    ALL: 'all',
-}
+export const HTTP_GET = 'get'
+export const HTTP_POST = 'post'
+export const HTTP_PUT = 'put'
+export const HTTP_DELETE = 'delete'
+export const HTTP_PATCH = 'patch'
+export const HTTP_ALL = 'all'
 export const METADATA_PREFIX = 'prefix'
 export const METADATA_PATH = 'path'
 export const METADATA_METHOD = 'method'
