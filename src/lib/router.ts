@@ -9,14 +9,14 @@ import {
     METADATA_PREFIX,
 } from './constants'
 
-function generateRouter(cls: new () => void) {
-    const prefix: string = Reflect.getMetadata(METADATA_PREFIX, cls)
+function generateRouter(obj: new () => void): Router {
+    const prefix: string = Reflect.getMetadata(METADATA_PREFIX, obj)
     const middlewares: Middleware[] =
-        Reflect.getMetadata(METADATA_MIDDLEWARES, cls) || []
+        Reflect.getMetadata(METADATA_MIDDLEWARES, obj) || []
     const funcNames: Array<string | symbol> = Reflect.ownKeys(
-        cls.prototype
+        obj.prototype
     )
-    const controller = new cls()
+    const controller = new obj()
 
     const router = new Router()
     router.prefix(prefix)
@@ -25,7 +25,9 @@ function generateRouter(cls: new () => void) {
     funcNames.forEach((funcName) => {
         if (
             funcName === FUNCTION_CONSTRUCTOR || !controller[funcName] || 'function' !== typeof controller[funcName]
-        ) return
+        ) {
+            return
+        }
 
         const func = controller[funcName]
 
@@ -33,7 +35,9 @@ function generateRouter(cls: new () => void) {
         const path = Reflect.getMetadata(METADATA_PATH, func)
         const middlewares = Reflect.getMetadata(METADATA_MIDDLEWARES, func) || []
 
-        if (!router[method] || 'function' !== typeof router[method] || !path) return
+        if (!router[method] || 'function' !== typeof router[method] || !path) {
+            return
+        }
 
         router[method](path, ...middlewares, func)
     })
@@ -41,27 +45,13 @@ function generateRouter(cls: new () => void) {
     return router
 }
 
-function use(app: Application, controller: new () => void) {
-    const router = generateRouter(controller)
-    app.use(router.routes()).use(router.allowedMethods())
-}
-
-/**
- * @depreciated please use useControllers()
- * @param app
- * @param controllers
- */
-export function registerControllers(
-    app: Application,
-    controllers: Array<new () => void>
-) {
-    controllers.forEach((controller) => use(app, controller))
-}
-
 export function useControllers(
     app: Application,
     ...controllers: Array<new () => void>
 ) {
-    controllers.forEach((controller) => use(app, controller))
+    controllers.forEach((controller) => {
+        const router = generateRouter(controller)
+        app.use(router.routes())
+        app.use(router.allowedMethods)
+    })
 }
-
