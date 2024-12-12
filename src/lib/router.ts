@@ -2,7 +2,6 @@ import 'reflect-metadata'
 import Application, { Middleware } from 'koa'
 import * as Router from '@koa/router'
 import {
-    FUNCTION_CONSTRUCTOR,
     METADATA_METHOD,
     METADATA_MIDDLEWARES,
     METADATA_PATH,
@@ -24,7 +23,7 @@ function generateRouter(obj: new () => void): Router {
 
     funcNames.forEach((funcName) => {
         if (
-            funcName === FUNCTION_CONSTRUCTOR || !controller[funcName] || 'function' !== typeof controller[funcName]
+            funcName === 'constructor' || !controller[funcName] || 'function' !== typeof controller[funcName]
         ) {
             return
         }
