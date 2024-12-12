@@ -28,13 +28,13 @@ $ npm install koa-controller-register
 - example/index.ts :
 ```typescript
 import Application from 'koa'
-import { registerControllers } from 'koa-controller-register'
+import { useControllers } from 'koa-controller-register'
 import PingController from './ping.controller'
 
 const controllers = [PingController]
 const app = new Application()
 // ...
-registerControllers(app, controllers)
+useControllers(app, controllers)
 app.listen(8080)
 ```
 
