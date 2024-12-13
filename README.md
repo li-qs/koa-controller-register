@@ -13,15 +13,14 @@ $ npm install koa-controller-register
 - `@Controller()`
 
 ### method decorators:
-- `@Before()`
 - `@Get()`
 - `@Post()`
 - `@Delete()`
 - `@Put()`
 - `@Patch()`
-- `@Options()`
-- `@Head()`
 - `@All()`
+- `@Middlewares()`
+- `@Before()`
 
 ## example
 
@@ -64,13 +63,13 @@ import { middleware0, middleware1 } from './middlewares'
 export default class PingController {
     @Get('/ping')
     async ping(ctx: Context) {
-        ctx.body = 'pong'
+        ctx.body = 'pong' // will print "middleware 0"
     }
 
     @Get('/example')
     @Before(middleware1)
     async test(ctx: Context) {
-        ctx.body = 'test'
+        ctx.body = 'test' // will print "middleware 0\n middleware 1"
     }
 }
 ```
